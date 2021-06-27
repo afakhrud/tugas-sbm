@@ -87,7 +87,7 @@ void readData() {
 
 //String html = "<html><body><h1>Tugas 2 - SBM</h1><p>Temperature: <span id='tem'>"+ String(temperature) +"</span></p><p>Humidity: <span id='hum'>"+ String(humidity) +"</span></p><p>LED: <span id='led'>"+ String(output26State) +"</span></p><button><a href='/ledtoggle' id='toggle'>Toggle</a></button><script type='text/javascript' defer src='/script1'></script></body></html>";
  String html;
-String script1 = "document.addEventListener('DOMContentLoaded', () => {console.log('loaded');const led = document.getElementById('toggle'); led ? led.addEventListener('click', (e) => { e.preventDefault(); fetch('/ledtoggle');}) : null;}); setInterval(console.log('please refresh to view latest update'), 10000);";
+String script1 = "document.addEventListener('DOMContentLoaded', () => {console.log('loaded');const led = document.getElementById('toggle'); led ? led.addEventListener('click', (e) => { e.preventDefault(); fetch('/ledtoggle');}) : null;}); setInterval(() => {fetch('/temperature').then(res => res.json()).then((data) => {document.getElementById('tem').innerHTML = `${data.value}`;}); fetch('/humidity').then(res => res.json()).then((data) => {document.getElementById('hum').innerHTML = `${data.value}`;}); fetch('/led').then(res => res.json()).then((data) => {document.getElementById('led').innerHTML = `${data.value}`;}); }, 2000);";
 
 //GET html
 void getUi() {
