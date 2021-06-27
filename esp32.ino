@@ -60,6 +60,15 @@ void create_json2(char *tag, String value, char *unit) {
   serializeJson(jsonDocument, buffer);
 }
 
+void create_json3(char *tag, float suhu, float lembab, String led) {  
+  jsonDocument.clear();  
+  jsonDocument["type"] = tag;
+  jsonDocument["suhu"] = suhu;
+  jsonDocument["lembab"] = lembab;
+  jsonDocument["led"] = led;
+  serializeJson(jsonDocument, buffer);
+}
+
 //GET pembacaan temperatur
 void getTemperature() {
 //  Serial.println("Get temperature");
@@ -76,6 +85,13 @@ void getHumidity() {
 void getLed() {
 //  Serial.println("Get led");
   create_json2("led", output26State , "");
+  server.send(200, "application/json", buffer);
+}
+
+//GET pembacaan dari ESP32
+void getAll() {
+//  Serial.println("Get all");
+  create_json3("all", temperature, humidity, output26State);
   server.send(200, "application/json", buffer);
 }
 
